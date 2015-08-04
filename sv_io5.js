@@ -164,7 +164,7 @@ io.on("connection", function (socket) {
 
         })
 
-    }, 10000);
+    }, 20000);
 
     socket.on("message1", function (data) {
         console.log(data);
