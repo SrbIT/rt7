@@ -102,8 +102,7 @@ io.on("connection", function (socket) {
 
                 var tmp = [{name: "hot", y: 2648},
                     {name: "cool", y: 211},
-                    {name: "warm", y: 135},
-                    {name: "hoto", y: 3389}]
+                    {name: "warm", y: 135}]
                 console.log(redisInfoKey)
                 console.log("E" + err)
                 socket.emit("echo4", tmp)
@@ -115,7 +114,9 @@ io.on("connection", function (socket) {
                     var z = {};
                     z.name = keys[i];
                     z.y = parseInt(reply[keys[i]]);
-                    data.push(z);
+                    if (z.name !== "hoto") {
+                        data.push(z);
+                    }
                 }
 
                 socket.emit("echo4", data)
@@ -209,8 +210,7 @@ io.on("connection", function (socket) {
                 name: "warm", y: 135,
                 sliced: true,
                 selected: true
-            },
-            {name: "hoto", y: 3389}]
+            }]
 
         socket.emit("echo4", tmp)
 
