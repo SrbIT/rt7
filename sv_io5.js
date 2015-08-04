@@ -41,6 +41,7 @@ io.on("connection", function (socket) {
         var redisISPKey = vMinuteFormatter + ":isp"
         var redisInfoKey = vMinuteFormatter + ":info"
         var redisDeviceKey = vMinuteFormatter + ":device"
+        var redisProfileKey = vMinuteFormatter + ":profile"
 
         client_Redis.hgetall(redisProductKey, function (err, reply) {
 
@@ -152,6 +153,37 @@ io.on("connection", function (socket) {
             }
 
         })
+        client_Redis.hgetall(redisProfileKey, function (err, reply) {
+
+            if (reply === null) {
+
+                var tmp = [{name: "450p", y: 747},
+                    {name: "360p", y: 2748},
+                    {name: "180p", y: 201},
+                    {name: "576p", y: 830},
+                    {name: "270p", y: 1052},
+                    {name: "720p", y: 2080},
+                    {name: "other", y: 7},
+                    {name: "1080p", y: 90},
+                    {name: "1008p", y: 1}]
+                console.log(redisProductKey)
+                console.log("E" + err)
+                socket.emit("echo6", tmp)
+            } else {
+
+                var keys = Object.keys(reply);
+                var data = [];
+                for (var i = 0; i < keys.length; i++) {
+                    var z = {};
+                    z.name = keys[i];
+                    z.y = parseInt(reply[keys[i]]);
+                    data.push(z);
+                }
+
+                socket.emit("echo6", data)
+            }
+
+        })
 
         client_Redis.hlen(redisSessionKey, function (err, reply) {
             console.log(err)
@@ -231,6 +263,29 @@ io.on("connection", function (socket) {
             {name: "other", y: 1}]
 
         socket.emit("echo5", tmp)
+
+    });
+
+    socket.on("message6", function (data) {
+        console.log(data);
+
+        var tmp = [{name: "450p", y: 747},
+            {name: "360p", y: 2748},
+            {name: "180p", y: 201},
+            {name: "576p", y: 830},
+            {name: "270p", y: 1052},
+            {
+                name: "720p", y: 2080
+                ,
+                sliced: true,
+                selected: true
+            },
+            {name: "other", y: 7},
+            {name: "1080p", y: 90},
+            {name: "1008p", y: 1}]
+
+
+        socket.emit("echo6", tmp)
 
     });
 

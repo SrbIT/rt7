@@ -11,6 +11,7 @@ socket.emit("message2", "Hello 2");
 socket.emit("message3", "Hello 3");
 socket.emit("message4", "Hello 4");
 socket.emit("message5", "Hello 5");
+socket.emit("message6", "Hello 6");
 
 
 $(function () {
@@ -154,6 +155,47 @@ $(function () {
             },
             title: {
                 text: 'Device\'s HDViet'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: "Brands",
+                colorByPoint: true,
+                data: array
+
+            }]
+        });
+
+
+    });
+
+    socket.on("echo6", function (data) {
+        var array = data
+        console.log(array);
+
+        $('#container6').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Profile\'s HDViet'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
