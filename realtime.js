@@ -2,9 +2,9 @@
  * Created by soh-l on 24/07/2015.
  */
 
-var socket = io.connect("http://localhost:3000");
+//var socket = io.connect("http://localhost:3000");
 //var socket = io.connect("http://118.69.168.220:3000");
-//var socket = io.connect("http://23.99.96.65:8080");
+var socket = io.connect("http://23.99.96.65:8080");
 
 socket.emit("message1", "Hello 1");
 socket.emit("message2", "Hello 2");
