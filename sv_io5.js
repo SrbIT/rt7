@@ -38,6 +38,9 @@ io.on("connection", function (socket) {
         //var vMinuteFormatter = "201507231017"
         var redisSessionKey = vMinuteFormatter + ":session:"
         var redisProductKey = vMinuteFormatter + ":product:"
+        var redisISPKey = vMinuteFormatter + ":isp"
+        var redisInfoKey = vMinuteFormatter + ":info"
+        var redisDeviceKey = vMinuteFormatter + ":device"
 
         client_Redis.hgetall(redisProductKey, function (err, reply) {
 
@@ -46,7 +49,7 @@ io.on("connection", function (socket) {
                 var tmp = [{name: "hdo", y: 10},
                     {name: "hdviet", y: 20},
                     {name: "vip_hdviet", y: 10}]
-console.log(redisProductKey)
+                console.log(redisProductKey)
                 console.log("E" + err)
                 socket.emit("echo1", tmp)
             } else {
@@ -64,6 +67,90 @@ console.log(redisProductKey)
             }
 
         })
+        client_Redis.hgetall(redisISPKey, function (err, reply) {
+
+            if (reply === null) {
+
+                var tmp = [{name: "fpt", y: 1265},
+                    {name: "vnpt", y: 2970},
+                    {name: "viettel", y: 1466},
+                    {name: "other", y: 246},
+                    {name: "SCTV", y: 124},
+                    {name: "CMC", y: 113},
+                    {name: "SPT", y: 25}]
+                console.log(redisISPKey)
+                console.log("E" + err)
+                socket.emit("echo3", tmp)
+            } else {
+
+                var keys = Object.keys(reply);
+                var data = [];
+                for (var i = 0; i < keys.length; i++) {
+                    var z = {};
+                    z.name = keys[i];
+                    z.y = parseInt(reply[keys[i]]);
+                    data.push(z);
+                }
+
+                socket.emit("echo3", data)
+            }
+
+        })
+        client_Redis.hgetall(redisInfoKey, function (err, reply) {
+
+            if (reply === null) {
+
+                var tmp = [{name: "hot", y: 2648},
+                    {name: "cool", y: 211},
+                    {name: "warm", y: 135},
+                    {name: "hoto", y: 3389}]
+                console.log(redisInfoKey)
+                console.log("E" + err)
+                socket.emit("echo4", tmp)
+            } else {
+
+                var keys = Object.keys(reply);
+                var data = [];
+                for (var i = 0; i < keys.length; i++) {
+                    var z = {};
+                    z.name = keys[i];
+                    z.y = parseInt(reply[keys[i]]);
+                    data.push(z);
+                }
+
+                socket.emit("echo4", data)
+
+            }
+
+        })
+        client_Redis.hgetall(redisDeviceKey, function (err, reply) {
+
+            if (reply === null) {
+
+                var tmp = [{name: "pc", y: 4749},
+                    {name: "ipad", y: 763},
+                    {name: "android", y: 297},
+                    {name: "iphone", y: 470},
+                    {name: "dunehd", y: 96},
+                    {name: "other", y: 1}]
+                console.log(redisProductKey)
+                console.log("E" + err)
+                socket.emit("echo5", tmp)
+            } else {
+
+                var keys = Object.keys(reply);
+                var data = [];
+                for (var i = 0; i < keys.length; i++) {
+                    var z = {};
+                    z.name = keys[i];
+                    z.y = parseInt(reply[keys[i]]);
+                    data.push(z);
+                }
+
+                socket.emit("echo5", data)
+            }
+
+        })
 
         client_Redis.hlen(redisSessionKey, function (err, reply) {
             console.log(err)
@@ -77,7 +164,7 @@ console.log(redisProductKey)
 
         })
 
-    }, 30000);
+    }, 10000);
 
     socket.on("message1", function (data) {
         console.log(data);
@@ -91,6 +178,59 @@ console.log(redisProductKey)
             }]
 
         socket.emit("echo1", tmp)
+
+    });
+
+    socket.on("message3", function (data) {
+        console.log(data);
+
+        var tmp = [{name: "fpt", y: 1265},
+            {name: "vnpt", y: 2970},
+            {
+                name: "viettel", y: 1466,
+                sliced: true,
+                selected: true
+            },
+            {name: "other", y: 246},
+            {name: "SCTV", y: 124},
+            {name: "CMC", y: 113},
+            {name: "SPT", y: 25}]
+
+        socket.emit("echo3", tmp)
+
+    });
+
+    socket.on("message4", function (data) {
+        console.log(data);
+
+        var tmp = [{name: "hot", y: 2648},
+            {name: "cool", y: 211},
+            {
+                name: "warm", y: 135,
+                sliced: true,
+                selected: true
+            },
+            {name: "hoto", y: 3389}]
+
+        socket.emit("echo4", tmp)
+
+    });
+
+    socket.on("message5", function (data) {
+        console.log(data);
+
+        var tmp = [{name: "pc", y: 4749},
+            {
+                name: "ipad", y: 763,
+                sliced: true,
+                selected: true
+            },
+            {name: "android", y: 297},
+            {name: "iphone", y: 470},
+            {name: "dunehd", y: 96},
+            {name: "other", y: 1}]
+
+        socket.emit("echo5", tmp)
 
     });
 
