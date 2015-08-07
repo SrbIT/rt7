@@ -4,13 +4,13 @@
 }
 
 .barline{
-    width: 67%;
+    width: 66%;
     float:left;
 }
 
 .barpie{
     width: 29%;
-    float:left;
+    float:right;
 }
 
 .barchar2{
