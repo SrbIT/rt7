@@ -3,6 +3,16 @@
     float:left;
 }
 
+.barline{
+    width: 69%;
+    float:left;
+}
+
+.barpie{
+    width: 29%;
+    float:left;
+}
+
 .barchar2{
     width: 24%;
     float:left;
