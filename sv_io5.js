@@ -38,10 +38,10 @@ io.on("connection", function (socket) {
         //var vMinuteFormatter = "201507231017"
         var redisSessionKey = vMinuteFormatter + ":session:"
         var redisProductKey = vMinuteFormatter + ":product:"
-        var redisISPKey = vMinuteFormatter + ":isp"
-        var redisInfoKey = vMinuteFormatter + ":info"
-        var redisDeviceKey = vMinuteFormatter + ":device"
-        var redisProfileKey = vMinuteFormatter + ":profile"
+        var redisISPKey = vMinuteFormatter + ":isp:"
+        var redisInfoKey = vMinuteFormatter + ":info:"
+        var redisDeviceKey = vMinuteFormatter + ":device:"
+        var redisProfileKey = vMinuteFormatter + ":profile:"
 
         client_Redis.hgetall(redisProductKey, function (err, reply) {
 
