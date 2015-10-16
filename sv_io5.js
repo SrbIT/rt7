@@ -36,7 +36,7 @@ io.on("connection", function (socket) {
 
         var vMinuteFormatter = moment.utc().subtract(1, 'minutes').format("YYYYMMDDHHmm")
         //var vMinuteFormatter = "201507231017"
-        var redisSessionKey = vMinuteFormatter + ":session:"
+        var redisSessionKey = "stats:"+vMinuteFormatter + ":session:"
         var redisProductKey = vMinuteFormatter + ":product:"
         var redisISPKey = vMinuteFormatter + ":isp:"
         var redisInfoKey = vMinuteFormatter + ":info:"
@@ -185,13 +185,13 @@ io.on("connection", function (socket) {
 
         })
 
-        client_Redis.hlen(redisSessionKey, function (err, reply) {
+        //client_Redis.hlen(redisSessionKey, function (err, reply) {
+        client_Redis.get(redisSessionKey, function (err, reply) {
             console.log(err)
 
             if (reply === null) {
                 socket.emit("echo2", "0")
             } else {
-
                 socket.emit("echo2", reply)
             }
 
